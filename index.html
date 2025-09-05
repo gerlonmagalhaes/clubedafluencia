@@ -49,6 +49,9 @@
             opacity: 1;
             transform: translateY(0);
         }
+        .carousel-item {
+            transition: transform 0.5s ease-in-out;
+        }
     </style>
 </head>
 <body class="bg-gray-50">
@@ -131,8 +134,65 @@
         </div>
     </section>
 
+    <!-- Seção do Fundador -->
+    <section id="teacher" class="py-20 bg-white">
+        <div class="container mx-auto px-6">
+            <h2 class="text-4xl font-bold text-center mb-12 section-title reveal">Nosso Fundador</h2>
+            <div class="flex flex-col md:flex-row items-center justify-center gap-12">
+                <!-- Carrossel -->
+                <div class="md:w-1/3 lg:w-1/4 reveal w-full max-w-sm mx-auto relative">
+                    <!-- Wrapper do Carrossel -->
+                    <div id="teacher-carousel" class="relative h-96 overflow-hidden rounded-lg shadow-lg">
+                        <!-- Slide 1 -->
+                        <div class="carousel-item duration-700 ease-in-out">
+                            <img src="https://placehold.co/400x400/943c80/FFFFFF?text=Foto+1" class="absolute block w-full h-full object-cover" alt="Foto 1 de Gerlon Magalhães">
+                        </div>
+                        <!-- Slide 2 -->
+                        <div class="carousel-item hidden duration-700 ease-in-out">
+                            <img src="https://placehold.co/400x400/d8576c/FFFFFF?text=Foto+2" class="absolute block w-full h-full object-cover" alt="Foto 2 de Gerlon Magalhães">
+                        </div>
+                        <!-- Slide 3 -->
+                        <div class="carousel-item hidden duration-700 ease-in-out">
+                           <img src="https://placehold.co/400x400/ff8c00/FFFFFF?text=Foto+3" class="absolute block w-full h-full object-cover" alt="Foto 3 de Gerlon Magalhães">
+                        </div>
+                    </div>
+                    <!-- Indicadores do Slide -->
+                    <div class="absolute z-10 flex space-x-3 -translate-x-1/2 bottom-5 left-1/2">
+                        <button type="button" class="carousel-indicator w-3 h-3 rounded-full bg-white" aria-current="true" aria-label="Slide 1"></button>
+                        <button type="button" class="carousel-indicator w-3 h-3 rounded-full bg-white/50" aria-current="false" aria-label="Slide 2"></button>
+                        <button type="button" class="carousel-indicator w-3 h-3 rounded-full bg-white/50" aria-current="false" aria-label="Slide 3"></button>
+                    </div>
+                    <!-- Controles do Slide -->
+                    <button type="button" id="prev-slide" class="absolute top-0 left-0 z-10 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none">
+                        <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 group-hover:bg-white/50 group-focus:ring-4 group-focus:ring-white group-focus:outline-none">
+                            <svg class="w-4 h-4 text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 1 1 5l4 4"/>
+                            </svg>
+                            <span class="sr-only">Anterior</span>
+                        </span>
+                    </button>
+                    <button type="button" id="next-slide" class="absolute top-0 right-0 z-10 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none">
+                        <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 group-hover:bg-white/50 group-focus:ring-4 group-focus:ring-white group-focus:outline-none">
+                            <svg class="w-4 h-4 text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4"/>
+                            </svg>
+                            <span class="sr-only">Próximo</span>
+                        </span>
+                    </button>
+                </div>
+                <div class="md:w-2/3 lg:w-1/2 reveal space-y-4 text-gray-700" style="transition-delay: 200ms;">
+                    <h3 class="text-3xl font-bold text-gray-800">Gerlon Magalhães</h3>
+                    <p class="font-semibold text-[#4f2b7d]">Criador do Clube da Fluência</p>
+                    <p>Apaixonado por idiomas e por conectar pessoas, sou poliglota e dedico minha vida a ajudar brasileiros a superarem o bloqueio na hora de falar inglês.</p>
+                    <p>Eu sei como é frustrante estudar por anos e sentir que não sai do lugar. A realidade é que muitos profissionais incríveis perdem grandes oportunidades pela insegurança com o idioma.</p>
+                    <p>Por isso, criei o Clube da Fluência. Mais que um curso, é uma comunidade. Um espaço seguro, divertido e focado 100% na prática para você finalmente destravar sua fala, ganhar confiança e alcançar seus objetivos. Vamos juntos nessa jornada?</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Seção 3: Benefícios -->
-    <section id="beneficios" class="py-20 bg-white">
+    <section id="beneficios" class="py-20">
         <div class="container mx-auto px-6">
             <h2 class="text-4xl font-bold text-center mb-12 section-title reveal">O que você vai conquistar</h2>
             <div class="grid md:grid-cols-2 xl:grid-cols-4 gap-8">
@@ -157,7 +217,7 @@
     </section>
 
     <!-- Seção 4: Planos -->
-    <section id="planos" class="py-20">
+    <section id="planos" class="py-20 bg-white">
         <div class="container mx-auto px-6">
             <h2 class="text-4xl font-bold text-center mb-12 section-title reveal">Escolha seu Plano</h2>
             <div class="flex flex-wrap justify-center gap-8">
@@ -196,7 +256,7 @@
     </section>
 
     <!-- Seção 5: Depoimentos -->
-    <section id="depoimentos" class="py-20 bg-white">
+    <section id="depoimentos" class="py-20">
         <div class="container mx-auto px-6">
             <h2 class="text-4xl font-bold text-center mb-12 section-title reveal">Quem já destravou o inglês</h2>
             <!-- Grid atualizado para 3 colunas em telas grandes -->
@@ -245,7 +305,7 @@
     </section>
     
     <!-- Seção 6: FAQ -->
-    <section id="faq" class="py-20">
+    <section id="faq" class="py-20 bg-white">
         <div class="container mx-auto px-6 max-w-3xl">
             <h2 class="text-4xl font-bold text-center mb-12 section-title reveal">Perguntas Frequentes</h2>
             <div class="space-y-4">
@@ -279,6 +339,16 @@
                         <p class="py-3 text-gray-600">Os pagamentos são recorrentes (mensais ou trimestrais) e podem ser feitos via cartão de crédito ou Pix. O processo é simples e seguro.</p>
                     </div>
                 </div>
+                <!-- Pergunta 4 -->
+                <div class="bg-white rounded-lg shadow-sm reveal">
+                    <button class="faq-toggle w-full flex justify-between items-center text-left p-5 font-semibold text-gray-800">
+                        <span>O material está incluso?</span>
+                        <svg class="faq-icon w-5 h-5 transition-transform transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                    </button>
+                    <div class="faq-content max-h-0 overflow-hidden transition-all duration-500 ease-in-out px-5">
+                        <p class="py-3 text-gray-600">Sim, todo material de apoio, como vocabulário e expressões dos temas discutidos, é disponibilizado aos membros do clube sem custo adicional.</p>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
@@ -292,13 +362,17 @@
                 Falar com um especialista
             </a>
             <div class="flex justify-center space-x-6 reveal" style="transition-delay: 500ms;">
+                <!-- Instagram Icon -->
+                <a href="https://www.instagram.com/teacher.gerlon" target="_blank" class="hover:opacity-75" aria-label="Instagram">
+                    <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.85s-.011 3.584-.069 4.85c-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07s-3.584-.012-4.85-.07c-3.252-.148-4.771-1.691-4.919-4.919-.058-1.265-.069-1.645-.069-4.85s.011-3.584.069-4.85c.149-3.225 1.664-4.771 4.919 4.919 1.266.058 1.644.07 4.85.07zM8.838 12a3.162 3.162 0 116.324 0 3.162 3.162 0 01-6.324 0zM12 15.318a3.318 3.318 0 100-6.636 3.318 3.318 0 000 6.636zm4.945-6.425a1.182 1.182 0 11-2.364 0 1.182 1.182 0 012.364 0z" clip-rule="evenodd" /></svg>
+                </a>
                 <!-- LinkedIn Icon -->
                 <a href="#" target="_blank" class="hover:opacity-75" aria-label="LinkedIn">
                     <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.239-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
                 </a>
-                <!-- Instagram Icon -->
-                <a href="https://www.instagram.com/teacher.gerlon" target="_blank" class="hover:opacity-75" aria-label="Instagram">
-                    <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.85s-.011 3.584-.069 4.85c-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07s-3.584-.012-4.85-.07c-3.252-.148-4.771-1.691-4.919-4.919-.058-1.265-.069-1.645-.069-4.85s.011-3.584.069-4.85c.149-3.225 1.664-4.771 4.919 4.919 1.266.058 1.644.07 4.85.07zM8.838 12a3.162 3.162 0 116.324 0 3.162 3.162 0 01-6.324 0zM12 15.318a3.318 3.318 0 100-6.636 3.318 3.318 0 000 6.636zm4.945-6.425a1.182 1.182 0 11-2.364 0 1.182 1.182 0 012.364 0z" clip-rule="evenodd" /></svg>
+                <!-- WhatsApp Icon -->
+                <a href="https://wa.me/5571920012811?text=Olá!%20Quero%20saber%20mais%20sobre%20o%20Clube%20da%20Fluência." target="_blank" class="hover:opacity-75" aria-label="WhatsApp">
+                    <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.886-.001 2.269.655 4.357 1.846 6.167l-1.03 3.777 3.824-1.001z"/></svg>
                 </a>
             </div>
         </div>
@@ -370,6 +444,80 @@
                     behavior: 'smooth'
                 });
             });
+
+            // Lógica do Carrossel do Teacher
+            const carouselItems = document.querySelectorAll('#teacher-carousel .carousel-item');
+            const carouselIndicators = document.querySelectorAll('#teacher-carousel .carousel-indicator');
+            const prevButton = document.getElementById('prev-slide');
+            const nextButton = document.getElementById('next-slide');
+            
+            let currentSlide = 0;
+            const totalSlides = carouselItems.length;
+            let slideInterval;
+
+            const showSlide = (n) => {
+                carouselItems.forEach((item, index) => {
+                    item.classList.add('hidden');
+                    if (index === n) {
+                        item.classList.remove('hidden');
+                    }
+                });
+
+                carouselIndicators.forEach((indicator, index) => {
+                    indicator.setAttribute('aria-current', 'false');
+                    indicator.classList.remove('bg-white');
+                    indicator.classList.add('bg-white/50');
+                    if (index === n) {
+                        indicator.setAttribute('aria-current', 'true');
+                        indicator.classList.add('bg-white');
+                        indicator.classList.remove('bg-white/50');
+                    }
+                });
+            };
+
+            const nextSlide = () => {
+                currentSlide = (currentSlide + 1) % totalSlides;
+                showSlide(currentSlide);
+            };
+
+            const prevSlide = () => {
+                currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
+                showSlide(currentSlide);
+            };
+
+            const startCarousel = () => {
+                slideInterval = setInterval(nextSlide, 5000); // Muda a cada 5 segundos
+            };
+
+            const stopCarousel = () => {
+                clearInterval(slideInterval);
+            };
+
+            // Event listeners
+            nextButton.addEventListener('click', () => {
+                stopCarousel();
+                nextSlide();
+                startCarousel();
+            });
+
+            prevButton.addEventListener('click', () => {
+                stopCarousel();
+                prevSlide();
+                startCarousel();
+            });
+
+            carouselIndicators.forEach((indicator, index) => {
+                indicator.addEventListener('click', () => {
+                    stopCarousel();
+                    currentSlide = index;
+                    showSlide(currentSlide);
+                    startCarousel();
+                });
+            });
+            
+            // Inicia o carrossel
+            showSlide(currentSlide);
+            startCarousel();
         });
     </script>
 
