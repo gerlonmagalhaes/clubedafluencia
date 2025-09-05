@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-BR" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Clube da Fluência - Destrave seu inglês!</title>
+    <title>Clube da Fluência - Destrave seu Inglês!</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -24,47 +24,78 @@
             transform: scale(1.05);
         }
         .section-title {
-            color: #4f2b7d;
+            background: linear-gradient(135deg, #A0AEC0, #CBD5E0);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
         }
-        .benefit-card, .testimonial-card {
+        .card {
             background-color: white;
             border-radius: 12px;
             box-shadow: 0 10px 20px rgba(0,0,0,0.05);
             transition: all 0.3s ease;
         }
-        .benefit-card:hover, .testimonial-card:hover {
+        .card:hover {
             transform: translateY(-5px);
             box-shadow: 0 15px 25px rgba(0,0,0,0.1);
+        }
+        /* Animação de fade-in */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease-out, transform 0.6s ease-out;
+        }
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
         }
     </style>
 </head>
 <body class="bg-gray-50">
 
     <!-- Header -->
-    <header class="bg-white shadow-md fixed w-full z-10">
+    <header class="bg-white shadow-md fixed w-full z-20">
         <nav class="container mx-auto px-6 py-3 flex justify-between items-center">
             <div class="flex items-center">
-            
-                <img src="./img/logo clube da fluencia.jpeg" alt="Logo Clube da Fluência" class="h-12 w-auto" onerror="this.src='https://placehold.co/150x50/4f2b7d/FFFFFF?text=Clube+da+Fluência'; this.onerror=null;">
-                <span class="ml-3 text-2xl font-bold text-gray-800">Clube da Fluência</span>
+                <img src="Imagem do WhatsApp de 2025-09-01 à(s) 16.26.24_76655b83.jpg" alt="Logo Clube da Fluência" class="h-12 w-auto" onerror="this.onerror=null; this.src='https://placehold.co/200x50/4f2b7d/FFFFFF?text=Clube+da+Fluência';">
             </div>
+            <!-- Menu Desktop -->
             <div class="hidden md:flex space-x-6 items-center">
                 <a href="#home" class="text-gray-600 hover:text-[#ff8c00]">Início</a>
                 <a href="#sobre" class="text-gray-600 hover:text-[#ff8c00]">Sobre</a>
                 <a href="#beneficios" class="text-gray-600 hover:text-[#ff8c00]">Benefícios</a>
+                <a href="#planos" class="text-gray-600 hover:text-[#ff8c00]">Planos</a>
                 <a href="#depoimentos" class="text-gray-600 hover:text-[#ff8c00]">Depoimentos</a>
+                 <a href="#faq" class="text-gray-600 hover:text-[#ff8c00]">FAQ</a>
                 <a href="#contato" class="bg-[#4f2b7d] text-white px-4 py-2 rounded-full hover:bg-[#6a3a99]">Fale Conosco</a>
             </div>
+            <!-- Botão Menu Mobile -->
+            <div class="md:hidden">
+                <button id="mobile-menu-button" class="text-gray-800 focus:outline-none">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
+                    </svg>
+                </button>
+            </div>
         </nav>
+        <!-- Menu Mobile (oculto por padrão) -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white">
+            <a href="#home" class="block py-2 px-6 text-sm text-gray-700 hover:bg-gray-100">Início</a>
+            <a href="#sobre" class="block py-2 px-6 text-sm text-gray-700 hover:bg-gray-100">Sobre</a>
+            <a href="#beneficios" class="block py-2 px-6 text-sm text-gray-700 hover:bg-gray-100">Benefícios</a>
+            <a href="#planos" class="block py-2 px-6 text-sm text-gray-700 hover:bg-gray-100">Planos</a>
+            <a href="#depoimentos" class="block py-2 px-6 text-sm text-gray-700 hover:bg-gray-100">Depoimentos</a>
+             <a href="#faq" class="block py-2 px-6 text-sm text-gray-700 hover:bg-gray-100">FAQ</a>
+            <a href="#contato" class="block py-2 px-6 text-sm text-gray-700 hover:bg-gray-100">Fale Conosco</a>
+        </div>
     </header>
 
     <!-- Seção 1: Página Inicial (Home) -->
     <section id="home" class="hero-gradient text-white pt-32 pb-20">
         <div class="container mx-auto px-6 text-center">
-            <h1 class="text-4xl md:text-6xl font-bold leading-tight mb-4">Clube da Fluência: Destrave seu inglês e fale com confiança!</h1>
-            <p class="text-xl md:text-2xl mb-8">Prática de conversação em grupo para todos os níveis, com foco na fluidez.</p>
-            <!-- IMPORTANTE: Substitua 'SEUNUMERO' pelo seu número de WhatsApp com código do país (ex: 5511999998888) -->
-            <a href="https://wa.me/5571920012811?text=Olá!%20Quero%20saber%20mais%20sobre%20o%20Clube%20da%20Fluência." target="_blank" class="btn-cta text-white font-bold py-4 px-10 rounded-full text-xl inline-block">
+            <h1 class="text-4xl md:text-6xl font-bold leading-tight mb-4 reveal">Destrave seu inglês e fale com confiança!</h1>
+            <p class="text-xl md:text-2xl mb-8 reveal" style="transition-delay: 200ms;">Prática de conversação em grupo para todos os níveis, com foco na fluidez.</p>
+            <a href="https://wa.me/5571920012811?text=Olá!%20Quero%20saber%20mais%20sobre%20o%20Clube%20da%20Fluência." target="_blank" class="btn-cta text-white font-bold py-4 px-10 rounded-full text-xl inline-block reveal" style="transition-delay: 400ms;">
                 Quero Entrar no Clube!
             </a>
         </div>
@@ -73,17 +104,26 @@
     <!-- Seção 2: Sobre o Clube -->
     <section id="sobre" class="py-20">
         <div class="container mx-auto px-6">
-            <h2 class="text-4xl font-bold text-center mb-12 section-title">Conheça o Clube</h2>
+            <h2 class="text-4xl font-bold text-center mb-12 section-title reveal">Conheça o Clube</h2>
             <div class="grid md:grid-cols-3 gap-10 text-center">
-                <div class="p-6">
+                <div class="p-6 reveal">
+                    <div class="flex justify-center mb-4">
+                        <svg class="w-16 h-16 text-[#943c80]" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                    </div>
                     <h3 class="text-2xl font-bold mb-3 text-gray-800">Nossa Missão</h3>
                     <p class="text-gray-600">Ajudamos pessoas a superarem o medo de falar inglês, oferecendo um ambiente seguro e descontraído para praticar.</p>
                 </div>
-                <div class="p-6">
+                <div class="p-6 reveal" style="transition-delay: 200ms;">
+                    <div class="flex justify-center mb-4">
+                        <svg class="w-16 h-16 text-[#d8576c]" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path></svg>
+                    </div>
                     <h3 class="text-2xl font-bold mb-3 text-gray-800">Como Funciona</h3>
                     <p class="text-gray-600">Sessões de conversação online e em grupo, com duração de 1 hora e temas variados para estimular a fala.</p>
                 </div>
-                <div class="p-6">
+                <div class="p-6 reveal" style="transition-delay: 400ms;">
+                     <div class="flex justify-center mb-4">
+                        <svg class="w-16 h-16 text-[#ff8c00]" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
+                    </div>
                     <h3 class="text-2xl font-bold mb-3 text-gray-800">Para Quem é</h3>
                     <p class="text-gray-600">Para iniciantes, intermediários e pessoas que já estudaram inglês mas sentem que precisam destravar a conversação.</p>
                 </div>
@@ -94,40 +134,78 @@
     <!-- Seção 3: Benefícios -->
     <section id="beneficios" class="py-20 bg-white">
         <div class="container mx-auto px-6">
-            <h2 class="text-4xl font-bold text-center mb-12 section-title">O que você vai conquistar</h2>
+            <h2 class="text-4xl font-bold text-center mb-12 section-title reveal">O que você vai conquistar</h2>
             <div class="grid md:grid-cols-2 xl:grid-cols-4 gap-8">
-                <div class="benefit-card p-8 text-center">
+                <div class="card p-8 text-center reveal">
                     <h3 class="text-xl font-bold mb-2 text-gray-800">Fale sem medo</h3>
-                    <p class="text-gray-600">Destaque o foco em superar a timidez e o bloqueio de falar em um ambiente de apoio.</p>
+                    <p class="text-gray-600">Supere a timidez e o bloqueio de falar em um ambiente de apoio e sem julgamentos.</p>
                 </div>
-                <div class="benefit-card p-8 text-center">
+                <div class="card p-8 text-center reveal" style="transition-delay: 200ms;">
                     <h3 class="text-xl font-bold mb-2 text-gray-800">Fluidez na conversação</h3>
                     <p class="text-gray-600">O objetivo não é a gramática perfeita, mas sim a capacidade de se comunicar naturalmente.</p>
                 </div>
-                <div class="benefit-card p-8 text-center">
+                <div class="card p-8 text-center reveal" style="transition-delay: 400ms;">
                     <h3 class="text-xl font-bold mb-2 text-gray-800">Vocabulário e expressões</h3>
-                    <p class="text-gray-600">Os temas das conversas ajudam a expandir o vocabulário de forma prática e contextualizada.</p>
+                    <p class="text-gray-600">Expanda seu vocabulário de forma prática e contextualizada com os temas das aulas.</p>
                 </div>
-                <div class="benefit-card p-8 text-center">
+                <div class="card p-8 text-center reveal" style="transition-delay: 600ms;">
                     <h3 class="text-xl font-bold mb-2 text-gray-800">Rede de contatos</h3>
-                    <p class="text-gray-600">Uma ótima oportunidade de conhecer pessoas com o mesmo objetivo e praticar junto.</p>
+                    <p class="text-gray-600">Conheça pessoas com o mesmo objetivo e crie uma rede para praticar inglês.</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Seção 4: Depoimentos -->
-    <section id="depoimentos" class="py-20">
+    <!-- Seção 4: Planos -->
+    <section id="planos" class="py-20">
         <div class="container mx-auto px-6">
-            <h2 class="text-4xl font-bold text-center mb-12 section-title">Quem já destravou o inglês</h2>
+            <h2 class="text-4xl font-bold text-center mb-12 section-title reveal">Escolha seu Plano</h2>
+            <div class="flex flex-wrap justify-center gap-8">
+                <!-- Plano Semestral -->
+                <div class="card w-full max-w-sm p-8 text-center flex flex-col reveal">
+                    <h3 class="text-2xl font-bold text-gray-800 mb-2">Plano Semestral</h3>
+                    <p class="text-gray-500 mb-6">Compromisso e economia</p>
+                    <p class="text-5xl font-bold text-[#4f2b7d] mb-6">R$200<span class="text-xl font-normal">/mês</span></p>
+                    <ul class="text-left space-y-2 text-gray-600 mb-8 flex-grow">
+                        <li>✔️ 2 sessões de conversação por semana</li>
+                        <li>✔️ Acesso a material de apoio</li>
+                        <li>✔️ Grupo exclusivo de alunos</li>
+                        <li>✔️ Temas variados toda semana</li>
+                    </ul>
+                    <a href="https://wa.me/5571920012811?text=Olá!%20Tenho%20interesse%20no%20Plano%20Semestral." target="_blank" class="btn-cta text-white font-bold py-3 px-8 rounded-full text-lg mt-auto">Quero esse!</a>
+                </div>
+
+                <!-- Plano Anual -->
+                <div class="card w-full max-w-sm p-8 text-center flex flex-col border-4 border-[#ff8c00] relative reveal" style="transition-delay: 200ms;">
+                    <span class="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-[#ff8c00] text-white text-sm font-bold px-4 py-1 rounded-full">MAIS POPULAR</span>
+                    <h3 class="text-2xl font-bold text-gray-800 mb-2">Plano Anual</h3>
+                    <p class="text-gray-500 mb-6">O maior desconto!</p>
+                    <p class="text-5xl font-bold text-[#4f2b7d] mb-6">R$167<span class="text-xl font-normal">/mês</span></p>
+                    <ul class="text-left space-y-2 text-gray-600 mb-8 flex-grow">
+                        <li>✔️ 2 sessões de conversação por semana</li>
+                        <li>✔️ Acesso a material de apoio</li>
+                        <li>✔️ Grupo exclusivo de alunos</li>
+                        <li>✔️ Temas variados toda semana</li>
+                        <li>✔️ Desconto de 30% (melhor valor)</li>
+                    </ul>
+                    <a href="https://wa.me/5571920012811?text=Olá!%20Tenho%20interesse%20no%20Plano%20Anual." target="_blank" class="btn-cta text-white font-bold py-3 px-8 rounded-full text-lg mt-auto">Quero esse!</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Seção 5: Depoimentos -->
+    <section id="depoimentos" class="py-20 bg-white">
+        <div class="container mx-auto px-6">
+            <h2 class="text-4xl font-bold text-center mb-12 section-title reveal">Quem já destravou o inglês</h2>
             <div class="grid md:grid-cols-2 gap-10">
-                <div class="testimonial-card p-8 flex flex-col items-center text-center">
+                <div class="card p-8 flex flex-col items-center text-center reveal">
                     <img src="https://placehold.co/100x100/E2E8F0/4A5568?text=Membro+1" alt="Foto do Membro 1" class="w-24 h-24 rounded-full mb-4">
                     <p class="text-gray-600 italic mb-4">"O Clube da Fluência me ajudou a finalmente destravar! Em poucas sessões, já me sinto muito mais confiante para falar."</p>
                     <h4 class="font-bold text-gray-800">Ana Silva</h4>
                     <span class="text-sm text-gray-500">Aluna do Clube</span>
                 </div>
-                <div class="testimonial-card p-8 flex flex-col items-center text-center">
+                <div class="card p-8 flex flex-col items-center text-center reveal" style="transition-delay: 200ms;">
                     <img src="https://placehold.co/100x100/E2E8F0/4A5568?text=Membro+2" alt="Foto do Membro 2" class="w-24 h-24 rounded-full mb-4">
                     <p class="text-gray-600 italic mb-4">"O ambiente é super descontraído e o medo de errar simplesmente some. Recomendo para todo mundo que quer praticar!"</p>
                     <h4 class="font-bold text-gray-800">Carlos Souza</h4>
@@ -136,20 +214,62 @@
             </div>
         </div>
     </section>
+    
+    <!-- Seção 6: FAQ -->
+    <section id="faq" class="py-20">
+        <div class="container mx-auto px-6 max-w-3xl">
+            <h2 class="text-4xl font-bold text-center mb-12 section-title reveal">Perguntas Frequentes</h2>
+            <div class="space-y-4">
+                <!-- Pergunta 1 -->
+                <div class="bg-white rounded-lg shadow-sm reveal">
+                    <button class="faq-toggle w-full flex justify-between items-center text-left p-5 font-semibold text-gray-800">
+                        <span>Qual o nível de inglês necessário para participar?</span>
+                        <svg class="faq-icon w-5 h-5 transition-transform transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                    </button>
+                    <div class="faq-content max-h-0 overflow-hidden transition-all duration-500 ease-in-out px-5">
+                        <p class="py-3 text-gray-600">Temos grupos para todos os níveis, do básico ao avançado. O mais importante é a sua vontade de praticar e destravar a fala. Nós te ajudaremos a encontrar o grupo ideal para você.</p>
+                    </div>
+                </div>
+                <!-- Pergunta 2 -->
+                 <div class="bg-white rounded-lg shadow-sm reveal">
+                    <button class="faq-toggle w-full flex justify-between items-center text-left p-5 font-semibold text-gray-800">
+                        <span>As aulas são online?</span>
+                        <svg class="faq-icon w-5 h-5 transition-transform transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                    </button>
+                    <div class="faq-content max-h-0 overflow-hidden transition-all duration-500 ease-in-out px-5">
+                        <p class="py-3 text-gray-600">Sim, todas as sessões de conversação são 100% online e realizadas em grupo através de plataformas de videoconferência como Zoom ou Google Meet.</p>
+                    </div>
+                </div>
+                 <!-- Pergunta 3 -->
+                 <div class="bg-white rounded-lg shadow-sm reveal">
+                    <button class="faq-toggle w-full flex justify-between items-center text-left p-5 font-semibold text-gray-800">
+                        <span>Como funcionam os pagamentos?</span>
+                        <svg class="faq-icon w-5 h-5 transition-transform transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                    </button>
+                    <div class="faq-content max-h-0 overflow-hidden transition-all duration-500 ease-in-out px-5">
+                        <p class="py-3 text-gray-600">Os pagamentos são recorrentes (mensais ou trimestrais) e podem ser feitos via cartão de crédito ou Pix. O processo é simples e seguro.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Seção 7: Contato -->
     <section id="contato" class="hero-gradient text-white py-20">
         <div class="container mx-auto px-6 text-center">
-            <h2 class="text-4xl font-bold mb-4">Pronto para falar inglês com confiança?</h2>
-            <p class="text-xl mb-8">Clique no botão abaixo e fale conosco diretamente no WhatsApp!</p>
-            <a href="https://wa.me/5571920012811?text=Olá!%20Quero%20saber%20mais%20sobre%20o%20Clube%20da%20Fluência." target="_blank" class="btn-cta text-white font-bold py-4 px-10 rounded-full text-xl inline-block mb-10">
+            <h2 class="text-4xl font-bold mb-4 reveal">Pronto para falar inglês com confiança?</h2>
+            <p class="text-xl mb-8 reveal" style="transition-delay: 200ms;">Clique no botão abaixo e fale conosco diretamente no WhatsApp!</p>
+            <a href="https://wa.me/5571920012811?text=Olá!%20Quero%20saber%20mais%20sobre%20o%20Clube%20da%20Fluência." target="_blank" class="btn-cta text-white font-bold py-4 px-10 rounded-full text-xl inline-block mb-10 reveal" style="transition-delay: 400ms;">
                 Falar com um especialista
             </a>
-            <div class="flex justify-center space-x-6">
-                <!-- Substitua '#' pelos links das suas redes sociais -->
-                <a href="#" class="hover:opacity-75">
-                    <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z" clip-rule="evenodd" /></svg>
+            <div class="flex justify-center space-x-6 reveal" style="transition-delay: 500ms;">
+                <!-- LinkedIn Icon -->
+                <a href="#" target="_blank" class="hover:opacity-75" aria-label="LinkedIn">
+                    <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.239-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
                 </a>
-                <a href="https://www.instagram.com/teacher.gerlon" target="_blank" class="hover:opacity-75">
-                    <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.85s-.011 3.584-.069 4.85c-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07s-3.584-.012-4.85-.07c-3.252-.148-4.771-1.691-4.919-4.919-.058-1.265-.069-1.645-.069-4.85s.011-3.584.069-4.85c.149-3.225 1.664-4.771 4.919 4.919 1.266.058 1.644.07 4.85.07zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948s.014 3.667.072 4.947c.2 4.358 2.618 6.78 6.98 6.98 1.281.059 1.689.073 4.948.073s3.667-.014 4.947-.072c4.358-.2 6.78-2.618 6.98-6.98.059-1.281.073-1.689.073-4.948s-.014-3.667-.072-4.947c-.2-4.358-2.618-6.78-6.98-6.98-1.281-.059-1.689-.073-4.948-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.162 6.162 6.162 6.162-2.759 6.162-6.162-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4s1.791-4 4-4 4 1.79 4 4-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44 1.441-.645 1.441-1.44-.645-1.44-1.441-1.44z" /></svg>
+                <!-- Instagram Icon -->
+                <a href="https://www.instagram.com/teacher.gerlon" target="_blank" class="hover:opacity-75" aria-label="Instagram">
+                    <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.85s-.011 3.584-.069 4.85c-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07s-3.584-.012-4.85-.07c-3.252-.148-4.771-1.691-4.919-4.919-.058-1.265-.069-1.645-.069-4.85s.011-3.584.069-4.85c.149-3.225 1.664-4.771 4.919 4.919 1.266.058 1.644.07 4.85.07zM8.838 12a3.162 3.162 0 116.324 0 3.162 3.162 0 01-6.324 0zM12 15.318a3.318 3.318 0 100-6.636 3.318 3.318 0 000 6.636zm4.945-6.425a1.182 1.182 0 11-2.364 0 1.182 1.182 0 012.364 0z" clip-rule="evenodd" /></svg>
                 </a>
             </div>
         </div>
@@ -160,6 +280,75 @@
             <p>&copy; 2024 Clube da Fluência. Todos os direitos reservados.</p>
         </div>
     </footer>
+    
+    <!-- Botão Voltar ao Topo -->
+    <button id="to-top-button" class="hidden fixed bottom-5 right-5 bg-[#4f2b7d] text-white p-3 rounded-full shadow-lg hover:bg-[#6a3a99] transition-opacity duration-300">
+      <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"></path></svg>
+    </button>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Lógica do Menu Mobile
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            mobileMenuButton.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+            
+            // Lógica do FAQ (Accordion)
+            const faqToggles = document.querySelectorAll('.faq-toggle');
+            faqToggles.forEach(toggle => {
+                toggle.addEventListener('click', () => {
+                    const content = toggle.nextElementSibling;
+                    const icon = toggle.querySelector('.faq-icon');
+
+                    if (content.style.maxHeight) {
+                        content.style.maxHeight = null;
+                        icon.style.transform = 'rotate(0deg)';
+                    } else {
+                        content.style.maxHeight = content.scrollHeight + 'px';
+                        icon.style.transform = 'rotate(180deg)';
+                    }
+                });
+            });
+
+            // Lógica da Animação ao Rolar
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            document.querySelectorAll('.reveal').forEach(el => {
+                observer.observe(el);
+            });
+            
+            // Lógica do Botão "Voltar ao Topo"
+            const toTopButton = document.getElementById('to-top-button');
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 300) {
+                    toTopButton.classList.remove('hidden');
+                } else {
+                    toTopButton.classList.add('hidden');
+                }
+            });
+
+            toTopButton.addEventListener('click', () => {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
 
 </body>
 </html>
+
+
+
+
+
+
