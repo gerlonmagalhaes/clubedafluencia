@@ -195,22 +195,50 @@
         </div>
     </section>
 
-    <!-- Seção 5: Depoimentos -->
+   <!-- Seção 5: Depoimentos -->
     <section id="depoimentos" class="py-20 bg-white">
         <div class="container mx-auto px-6">
             <h2 class="text-4xl font-bold text-center mb-12 section-title reveal">Quem já destravou o inglês</h2>
-            <div class="grid md:grid-cols-2 gap-10">
+            <!-- Grid atualizado para 3 colunas em telas grandes -->
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-10">
+                <!-- Membro 1 -->
                 <div class="card p-8 flex flex-col items-center text-center reveal">
-                    <img src="https://placehold.co/100x100/E2E8F0/4A5568?text=Membro+1" alt="Foto do Membro 1" class="w-24 h-24 rounded-full mb-4">
+                    <!-- Formato do vídeo alterado para retangular vertical -->
+                    <div class="w-32 h-56 rounded-lg mb-4 overflow-hidden bg-gray-300 flex items-center justify-center">
+                        <video class="w-full h-full object-cover" poster="https://placehold.co/90x160/E2E8F0/4A5568?text=Play" controls>
+                            <source src="video1.mp4" type="video/mp4">
+                            Seu navegador não suporta a tag de vídeo.
+                        </video>
+                    </div>
                     <p class="text-gray-600 italic mb-4">"O Clube da Fluência me ajudou a finalmente destravar! Em poucas sessões, já me sinto muito mais confiante para falar."</p>
                     <h4 class="font-bold text-gray-800">Ana Silva</h4>
                     <span class="text-sm text-gray-500">Aluna do Clube</span>
                 </div>
+                <!-- Membro 2 -->
                 <div class="card p-8 flex flex-col items-center text-center reveal" style="transition-delay: 200ms;">
-                    <img src="https://placehold.co/100x100/E2E8F0/4A5568?text=Membro+2" alt="Foto do Membro 2" class="w-24 h-24 rounded-full mb-4">
+                    <!-- Formato do vídeo alterado para retangular vertical -->
+                    <div class="w-32 h-56 rounded-lg mb-4 overflow-hidden bg-gray-300 flex items-center justify-center">
+                        <video class="w-full h-full object-cover" poster="https://placehold.co/90x160/E2E8F0/4A5568?text=Play" controls>
+                            <source src="video2.mp4" type="video/mp4">
+                            Seu navegador não suporta a tag de vídeo.
+                        </video>
+                    </div>
                     <p class="text-gray-600 italic mb-4">"O ambiente é super descontraído e o medo de errar simplesmente some. Recomendo para todo mundo que quer praticar!"</p>
                     <h4 class="font-bold text-gray-800">Carlos Souza</h4>
                     <span class="text-sm text-gray-500">Aluno do Clube</span>
+                </div>
+                <!-- Membro 3 -->
+                <div class="card p-8 flex flex-col items-center text-center reveal" style="transition-delay: 400ms;">
+                    <!-- Formato do vídeo alterado para retangular vertical -->
+                    <div class="w-32 h-56 rounded-lg mb-4 overflow-hidden bg-gray-300 flex items-center justify-center">
+                        <video class="w-full h-full object-cover" poster="https://placehold.co/90x160/E2E8F0/4A5568?text=Play" controls>
+                            <source src="video3.mp4" type="video/mp4">
+                            Seu navegador não suporta a tag de vídeo.
+                        </video>
+                    </div>
+                    <p class="text-gray-600 italic mb-4">"Finalmente encontrei um lugar para praticar conversação sem pressão. A evolução é nítida e os resultados são incríveis!"</p>
+                    <h4 class="font-bold text-gray-800">Mariana Lima</h4>
+                    <span class="text-sm text-gray-500">Aluna do Clube</span>
                 </div>
             </div>
         </div>
@@ -347,6 +375,7 @@
 
 </body>
 </html>
+
 
 
 
