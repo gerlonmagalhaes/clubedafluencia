@@ -1,535 +1,347 @@
 <!DOCTYPE html>
-<html lang="pt-BR" class="scroll-smooth">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Clube da Fluência - Destrave seu Inglês!</title>
+    <title>Contrato Digital - My Personal Teacher</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/signature_pad@4.0.0/dist/signature_pad.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        body {
-            font-family: 'Poppins', sans-serif;
+        body { font-family: 'Inter', sans-serif; }
+        .loader {
+            border: 4px solid #f3f3f3; border-radius: 50%; border-top: 4px solid #3498db;
+            width: 24px; height: 24px; animation: spin 2s linear infinite;
         }
-        .hero-gradient {
-            background: linear-gradient(135deg, #4f2b7d, #943c80, #d8576c, #ff8c00);
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        .hidden { display: none; }
+        .signature-wrapper {
+            position: relative; width: 100%; height: 12rem;
+            -moz-user-select: none; -webkit-user-select: none; -ms-user-select: none; user-select: none;
         }
-        .btn-cta {
-            background-color: #ff8c00;
-            transition: all 0.3s ease;
-        }
-        .btn-cta:hover {
-            background-color: #e67e00;
-            transform: scale(1.05);
-        }
-        .section-title {
-            background: linear-gradient(135deg, #A0AEC0, #CBD5E0);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-        }
-        .card {
-            background-color: white;
-            border-radius: 12px;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
-            transition: all 0.3s ease;
-        }
-        .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 25px rgba(0,0,0,0.1);
-        }
-        /* Animação de fade-in */
-        .reveal {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: opacity 0.8s ease-out, transform 0.6s ease-out;
-        }
-        .reveal.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-        .carousel-item {
-            transition: transform 0.5s ease-in-out;
-        }
+        #signature-pad { position: absolute; left: 0; top: 0; width: 100%; height: 100%; }
+        /* Estilo para garantir quebras de linha corretas no modal */
+        #contract-content-modal p { white-space: pre-wrap; } 
     </style>
 </head>
-<body class="bg-gray-50">
+<body class="bg-gray-100 flex items-center justify-center min-h-screen p-4">
 
-    <!-- Header -->
-    <header class="bg-white shadow-md fixed w-full z-20">
-        <nav class="container mx-auto px-6 py-3 flex justify-between items-center">
-            <div class="flex items-center">
-                <img src="https://github.com/gerlonmagalhaes/clubedafluencia/raw/main/img/logo%20clube%20da%20fluencia.jpeg" alt="Logo Clube da Fluência" class="h-12 w-auto" onerror="this.onerror=null; this.src='https://placehold.co/200x50/4f2b7d/FFFFFF?text=Clube+da+Fluência';">
-            </div>
-            <!-- Menu Desktop -->
-            <div class="hidden md:flex space-x-6 items-center">
-                <a href="#home" class="text-gray-600 hover:text-[#ff8c00]">Início</a>
-                <a href="#sobre" class="text-gray-600 hover:text-[#ff8c00]">Sobre</a>
-                <a href="#beneficios" class="text-gray-600 hover:text-[#ff8c00]">Benefícios</a>
-                <a href="#planos" class="text-gray-600 hover:text-[#ff8c00]">Planos</a>
-                <a href="#depoimentos" class="text-gray-600 hover:text-[#ff8c00]">Depoimentos</a>
-                <a href="#faq" class="text-gray-600 hover:text-[#ff8c00]">FAQ</a>
-                <a href="#contato" class="bg-[#4f2b7d] text-white px-4 py-2 rounded-full hover:bg-[#6a3a99]">Fale Conosco</a>
-            </div>
-            <!-- Botão Menu Mobile -->
-            <div class="md:hidden">
-                <button id="mobile-menu-button" class="text-gray-800 focus:outline-none">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
-                    </svg>
-                </button>
-            </div>
-        </nav>
-        <!-- Menu Mobile (oculto por padrão) -->
-        <div id="mobile-menu" class="hidden md:hidden bg-white">
-            <a href="#home" class="block py-2 px-6 text-sm text-gray-700 hover:bg-gray-100">Início</a>
-            <a href="#sobre" class="block py-2 px-6 text-sm text-gray-700 hover:bg-gray-100">Sobre</a>
-            <a href="#beneficios" class="block py-2 px-6 text-sm text-gray-700 hover:bg-gray-100">Benefícios</a>
-            <a href="#planos" class="block py-2 px-6 text-sm text-gray-700 hover:bg-gray-100">Planos</a>
-            <a href="#depoimentos" class="block py-2 px-6 text-sm text-gray-700 hover:bg-gray-100">Depoimentos</a>
-            <a href="#faq" class="block py-2 px-6 text-sm text-gray-700 hover:bg-gray-100">FAQ</a>
-            <a href="#contato" class="block py-2 px-6 text-sm text-gray-700 hover:bg-gray-100">Fale Conosco</a>
+    <div class="container bg-white w-full max-w-3xl mx-auto p-8 md:p-12 rounded-2xl shadow-lg">
+        <div class="header text-center mb-8">
+            <img src="https://placehold.co/200x80/3498db/white?text=My+Personal+Teacher" alt="Logo My Personal Teacher" class="mx-auto mb-4 rounded-lg">
+            <h1 class="text-3xl font-bold text-gray-800">Contrato Digital - Clube da Fluência</h1>
+            <p class="text-gray-600 mt-2">Preencha, assine e baixe seu contrato de matrícula.</p>
         </div>
-    </header>
 
-    <!-- Seção 1: Página Inicial (Home) -->
-    <section id="home" class="hero-gradient text-white pt-32 pb-20">
-        <div class="container mx-auto px-6 text-center">
+        <form id="contract-form">
+            <div class="space-y-6">
+                 <div class="form-group">
+                    <label for="fullName" class="block text-sm font-medium text-gray-700 mb-1">Nome completo do aluno(a)</label>
+                    <input type="text" id="fullName" name="Nome do Aluno" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 transition" required placeholder="Digite seu nome completo">
+                </div>
+                <div class="form-group">
+                    <label for="cpf" class="block text-sm font-medium text-gray-700 mb-1">CPF</label>
+                    <input type="text" id="cpf" name="CPF" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 transition" required placeholder="000.000.000-00">
+                </div>
+                <div class="form-group">
+                    <label for="birthdate" class="block text-sm font-medium text-gray-700 mb-1">Data de Nascimento</label>
+                    <input type="date" id="birthdate" name="Data de Nascimento" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 transition" required>
+                </div>
+                
+                <!-- NOVO CAMPO ADICIONADO AQUI -->
+                <div class="form-group">
+                    <label for="planDuration" class="block text-sm font-medium text-gray-700 mb-1">Escolha o seu plano</label>
+                    <select id="planDuration" name="Duração do Plano" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 transition bg-white" required>
+                        <option value="" disabled selected>Selecione a duração</option>
+                        <option value="6 meses - Semestral">6 meses - Semestral</option>
+                        <option value="12 meses - Anual">12 meses - Anual</option>
+                    </select>
+                </div>
+                <!-- FIM DO NOVO CAMPO -->
+
+                <div class="form-group">
+                    <label for="contractValue" class="block text-sm font-medium text-gray-700 mb-1">Valor do Contrato</label>
+                    <input type="text" id="contractValue" name="Valor do Contrato" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 transition" required placeholder="Ex: R$ 1.800,00">
+                    <small class="text-gray-500 mt-1 block">Para pagamento parcelado, haverá acréscimo de 4,9%.</small>
+                </div>
+
+            </div>
+
+            <div class="form-group mt-6">
+                <label class="block text-sm font-medium text-gray-700 mb-2">Assinatura Digital</label>
+                <div class="signature-wrapper border border-gray-300 rounded-lg">
+                    <canvas id="signature-pad"></canvas>
+                </div>
+                <div class="text-right">
+                    <button type="button" id="clear-signature" class="text-sm text-blue-600 hover:underline mt-2">Limpar</button>
+                </div>
+            </div>
+
+            <div class="terms mt-6">
+                <div class="flex items-start">
+                    <input type="checkbox" id="terms" name="terms" required class="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500 mt-1">
+                    <label for="terms" class="ml-2 text-sm text-gray-700">Eu li e concordo com os <a href="#" id="view-contract-link" class="font-medium text-blue-600 hover:underline">termos do contrato</a>.</label>
+                </div>
+            </div>
             
-            <!-- CÓDIGO DA IMAGEM ADICIONADO AQUI -->
-            <div class="flex justify-center mb-8 reveal">
-                 <img src="https://github.com/gerlonmagalhaes/clubedafluencia/raw/main/img/logo%20clube%20da%20fluencia.jpeg" alt="Logo Clube da Fluência" class="w-40 h-40 rounded-full object-cover shadow-lg border-4 border-white">
-            </div>
+            <button type="submit" id="submit-button" class="w-full bg-blue-600 text-white py-3 px-6 rounded-lg font-semibold text-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-transform transform hover:scale-105 mt-8 flex items-center justify-center">
+                <span id="button-text">Gerar e Baixar Contrato PDF</span>
+                <div id="loader" class="loader hidden ml-3"></div>
+            </button>
+        </form>
 
-            <h1 class="text-4xl md:text-6xl font-bold leading-tight mb-4 reveal" style="transition-delay: 200ms;">Destrave seu inglês e fale com confiança!</h1>
-            <p class="text-xl md:text-2xl mb-8 reveal" style="transition-delay: 400ms;">Prática de conversação em grupo para todos os níveis, com foco na fluidez.</p>
-            <a href="https://wa.me/5571920012811?text=Olá!%20Quero%20saber%20mais%20sobre%20o%20Clube%20da%20Fluência." target="_blank" class="btn-cta text-white font-bold py-4 px-10 rounded-full text-xl inline-block reveal" style="transition-delay: 600ms;">
-                Quero Entrar no Clube!
-            </a>
-        </div>
-    </section>
-
-    <!-- Seção 2: Sobre o Clube -->
-    <section id="sobre" class="py-20">
-        <div class="container mx-auto px-6">
-            <h2 class="text-4xl font-bold text-center mb-12 section-title reveal">Conheça o Clube</h2>
-            <div class="grid md:grid-cols-3 gap-10 text-center">
-                <div class="p-6 reveal">
-                    <div class="flex justify-center mb-4">
-                        <svg class="w-16 h-16 text-[#943c80]" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
-                    </div>
-                    <h3 class="text-2xl font-bold mb-3 text-gray-800">Nossa Missão</h3>
-                    <p class="text-gray-600">Ajudamos pessoas a superarem o medo de falar inglês, oferecendo um ambiente seguro e descontraído para praticar.</p>
+        <div id="status-message" class="mt-6 text-center"></div>
+        
+        <div id="contract-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center p-4 z-50">
+             <div class="bg-white rounded-lg shadow-xl w-full max-w-3xl max-h-[90vh] overflow-y-auto">
+                <div class="p-6 border-b sticky top-0 bg-white">
+                    <h2 class="text-xl font-bold">Termos do Contrato</h2>
+                    <button id="close-modal" class="absolute top-4 right-4 text-gray-500 hover:text-gray-800 text-2xl">&times;</button>
                 </div>
-                <div class="p-6 reveal" style="transition-delay: 200ms;">
-                    <div class="flex justify-center mb-4">
-                        <svg class="w-16 h-16 text-[#d8576c]" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path></svg>
-                    </div>
-                    <h3 class="text-2xl font-bold mb-3 text-gray-800">Como Funciona</h3>
-                    <p class="text-gray-600">Sessões de conversação online e em grupo, duas sessões por semana e temas variados para estimular a fala.</p>
-                </div>
-                <div class="p-6 reveal" style="transition-delay: 400ms;">
-                    <div class="flex justify-center mb-4">
-                        <svg class="w-16 h-16 text-[#ff8c00]" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
-                    </div>
-                    <h3 class="text-2xl font-bold mb-3 text-gray-800">Para Quem é</h3>
-                    <p class="text-gray-600">Para iniciantes, intermediários e pessoas que já estudaram inglês mas sentem que precisam destravar a conversação.</p>
+                <div id="contract-content-modal" class="p-6 text-sm text-gray-700 space-y-4"></div>
+                 <div class="p-4 border-t sticky bottom-0 bg-white text-right">
+                    <button id="close-modal-footer" class="bg-gray-200 text-gray-800 py-2 px-4 rounded-lg hover:bg-gray-300">Fechar</button>
                 </div>
             </div>
         </div>
-    </section>
 
-    <!-- Seção do Fundador -->
-    <section id="teacher" class="py-20 bg-white">
-        <div class="container mx-auto px-6">
-            <h2 class="text-4xl font-bold text-center mb-12 section-title reveal">Nosso Fundador</h2>
-            <div class="flex flex-col md:flex-row items-center justify-center gap-12 lg:gap-16">
-                <!-- Carrossel -->
-                <div class="md:w-2/5 lg:w-1/3 reveal w-full max-w-md mx-auto relative">
-                    <!-- Wrapper do Carrossel -->
-                    <div id="teacher-carousel" class="relative h-80 overflow-hidden rounded-lg shadow-lg">
-                        <!-- Slide 1 -->
-                        <div class="carousel-item duration-700 ease-in-out">
-                            <img src="https://github.com/gerlonmagalhaes/clubedafluencia/raw/main/img/gerlon%20entrevista%20tv%20bahia.JPG" class="absolute block w-full h-full object-cover" alt="Foto 1 de Gerlon Magalhães">
-                        </div>
-                        <!-- Slide 2 -->
-                        <div class="carousel-item hidden duration-700 ease-in-out">
-                            <img src="https://github.com/gerlonmagalhaes/clubedafluencia/raw/main/img/Capa%20de%20Produto%20do%20Hotmart%20Club%20Marketing%20Digital%20Moderno%20Vermelho%20e%20Preto%20(2).png" class="absolute block w-full h-full object-cover" alt="Foto 2 de Gerlon Magalhães">
-                        </div>
-                        <!-- Slide 3 -->
-                        <div class="carousel-item hidden duration-700 ease-in-out">
-                           <img src="https://github.com/gerlonmagalhaes/clubedafluencia/raw/main/img/como%20vou%20ser%20triste%20se%20esse%20ano%20eu%20instagram%20carrossel%20moderno%20preto%20e%20branco.png" class="absolute block w-full h-full object-cover" alt="Foto 3 de Gerlon Magalhães">
-                        </div>
-                    </div>
-                    <!-- Indicadores do Slide -->
-                    <div class="absolute z-10 flex space-x-3 -translate-x-1/2 bottom-5 left-1/2">
-                        <button type="button" class="carousel-indicator w-3 h-3 rounded-full bg-white" aria-current="true" aria-label="Slide 1"></button>
-                        <button type="button" class="carousel-indicator w-3 h-3 rounded-full bg-white/50" aria-current="false" aria-label="Slide 2"></button>
-                        <button type="button" class="carousel-indicator w-3 h-3 rounded-full bg-white/50" aria-current="false" aria-label="Slide 3"></button>
-                    </div>
-                    <!-- Controles do Slide -->
-                    <button type="button" id="prev-slide" class="absolute top-0 left-0 z-10 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none">
-                        <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 group-hover:bg-white/50 group-focus:ring-4 group-focus:ring-white group-focus:outline-none">
-                            <svg class="w-4 h-4 text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
-                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 1 1 5l4 4"/>
-                            </svg>
-                            <span class="sr-only">Anterior</span>
-                        </span>
-                    </button>
-                    <button type="button" id="next-slide" class="absolute top-0 right-0 z-10 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none">
-                        <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 group-hover:bg-white/50 group-focus:ring-4 group-focus:ring-white group-focus:outline-none">
-                            <svg class="w-4 h-4 text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
-                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4"/>
-                            </svg>
-                            <span class="sr-only">Próximo</span>
-                        </span>
-                    </button>
-                </div>
-                <div class="md:w-3/5 lg:w-1/2 reveal space-y-4 text-gray-700" style="transition-delay: 200ms;">
-                    <h3 class="text-3xl font-bold text-gray-800">Gerlon Magalhães</h3>
-                    <p class="font-semibold text-[#4f2b7d]">Criador do Clube da Fluência</p>
-                    <p>Apaixonado por idiomas e por conectar pessoas, sou poliglota e me dedico há 10 anos a ajudar brasileiros a superarem o bloqueio na hora de falar inglês.</p>
-                    <p>Eu sei como é frustrante estudar por anos e sentir que não sai do lugar. A realidade é que muitos profissionais incríveis perdem grandes oportunidades pela insegurança com o idioma.</p>
-                    <p>Por isso, criei o Clube da Fluência. Mais que um curso, é uma comunidade. Um espaço seguro, divertido e focado 100% na prática para você finalmente destravar sua fala, ganhar confiança e alcançar seus objetivos. Vamos juntos nessa jornada?</p>
-                </div>
-            </div>
+        <div class="footer text-center mt-10 text-xs text-gray-500">
+            <p>My Personal Teacher - Clube da Fluência</p>
+            <p>+55 71 92001-2811 | cursomyteacher@gmail.com</p>
         </div>
-    </section>
-
-    <!-- Seção 3: Benefícios -->
-    <section id="beneficios" class="py-20">
-        <div class="container mx-auto px-6">
-            <h2 class="text-4xl font-bold text-center mb-12 section-title reveal">Como o Clube da Fluência funciona na prática
-</h2>
-            <div class="grid md:grid-cols-2 xl:grid-cols-4 gap-8">
-                <div class="card p-8 text-center reveal">
-                    <h3 class="text-xl font-bold mb-2 text-gray-800">Quebre o gelo: Q&A dinâmico</h3>
-                    <p class="text-gray-600">Nossos encontros começam com perguntas e respostas rápidas. É a forma perfeita de aquecer a conversação, ativar seu vocabulário e interagir com os colegas de forma descontraída e natural.</p>
-                </div>
-                <div class="card p-8 text-center reveal" style="transition-delay: 200ms;">
-                    <h3 class="text-xl font-bold mb-2 text-gray-800">Explore e exponha: Apresentações guiadas</h3>
-                    <p class="text-gray-600">Cada membro tem a chance de apresentar um tema. Nós oferecemos um roteiro para guiar sua fala, ajudando você a estruturar suas ideias, ganhar confiança e praticar a exposição em inglês. </p>
-                </div>
-                <div class="card p-8 text-center reveal" style="transition-delay: 400ms;">
-                    <h3 class="text-xl font-bold mb-2 text-gray-800">Conexões reais: Entrevistas interativas</h3>
-                    <p class="text-gray-600">Simulamos entrevistas com convidados, professores ou entre os próprios colegas. O objetivo é desenvolver sua escuta, aprender a formular perguntas e a responder com clareza, como em uma conversa do dia a dia.</p>
-                </div>
-                <div class="card p-8 text-center reveal" style="transition-delay: 600ms;">
-                    <h3 class="text-xl font-bold mb-2 text-gray-800">Vivencie o idioma: Debates e Role-plays</h3>
-                    <p class="text-gray-600">Coloque seu inglês à prova em cenários práticos. Defenda um ponto de vista em um debate ou simule situações reais, como uma entrevista de emprego, uma viagem ou uma negociação. É a prática que te prepara para o mundo.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Seção 4: Planos -->
-    <section id="planos" class="py-20 bg-white">
-        <div class="container mx-auto px-6">
-            <h2 class="text-4xl font-bold text-center mb-12 section-title reveal">Escolha seu Plano</h2>
-            <div class="flex flex-wrap justify-center gap-8">
-                <!-- Plano Semestral -->
-                <div class="card w-full max-w-sm p-8 text-center flex flex-col reveal">
-                    <h3 class="text-2xl font-bold text-gray-800 mb-2">Plano Semestral</h3>
-                    <p class="text-gray-500 mb-6">Compromisso e economia</p>
-                    <p class="text-5xl font-bold text-[#4f2b7d] mb-6">R$300<span class="text-xl font-normal">/mês</span></p>
-                    <ul class="text-left space-y-2 text-gray-600 mb-8 flex-grow">
-                        <li>✔️ 2 sessões de conversação por semana</li>
-                        <li>✔️ Acesso a material de apoio</li>
-                        <li>✔️ Grupo exclusivo de alunos</li>
-                        <li>✔️ Temas variados todo mês</li>
-                        <li>✔️ Parcele em até 6 vezes</li>
-                    </ul>
-                    <a href="https://pay.sumup.com/b2c/XXEHDS4N6S" target="_blank" class="btn-cta text-white font-bold py-3 px-8 rounded-full text-lg mt-auto">Quero esse!</a>
-                </div>
-
-                <!-- Plano Anual -->
-                <div class="card w-full max-w-sm p-8 text-center flex flex-col border-4 border-[#ff8c00] relative reveal" style="transition-delay: 200ms;">
-                    <span class="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-[#ff8c00] text-white text-sm font-bold px-4 py-1 rounded-full">MAIS POPULAR</span>
-                    <h3 class="text-2xl font-bold text-gray-800 mb-2">Plano Anual</h3>
-                    <p class="text-gray-500 mb-6">O maior desconto!</p>
-                    <p class="text-5xl font-bold text-[#4f2b7d] mb-6">R$275<span class="text-xl font-normal">/mês</span></p>
-                    <ul class="text-left space-y-2 text-gray-600 mb-8 flex-grow">
-                        <li>✔️ 2 sessões de conversação por semana</li>
-                        <li>✔️ Acesso a material de apoio</li>
-                        <li>✔️ Grupo exclusivo de alunos</li>
-                        <li>✔️ Temas variados todo mês</li>
-                        <li>✔️ Traga um amigo diferente por mês para uma aula contigo sem custo adicional</li>
-                        <li>✔️ Ganhe 1 mês grátis</li>
-                        <li>✔️ Parcele em até 12 vezes</li>
-                    </ul>
-                    <a href="https://pay.sumup.com/b2c/XXJV02JWHO" target="_blank" class="btn-cta text-white font-bold py-3 px-8 rounded-full text-lg mt-auto">Quero esse!</a>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Seção 5: Depoimentos -->
-    <section id="depoimentos" class="py-20">
-        <div class="container mx-auto px-6">
-            <h2 class="text-4xl font-bold text-center mb-12 section-title reveal">Quem já destravou o inglês</h2>
-            <!-- Grid atualizado para 3 colunas em telas grandes -->
-            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-10">
-                <!-- Membro 1 -->
-                <div class="card p-8 flex flex-col items-center text-center reveal">
-                    <!-- Formato do vídeo alterado para retangular vertical -->
-                    <div class="w-32 h-56 rounded-lg mb-4 overflow-hidden bg-gray-300 flex items-center justify-center">
-                        <video class="w-full h-full object-cover" poster="https://placehold.co/90x160/E2E8F0/4A5568?text=Play" controls>
-                            <source src="https://github.com/gerlonmagalhaes/clubedafluencia/raw/refs/heads/main/img/video1.mp4" type="video/mp4">
-                            Seu navegador não suporta a tag de vídeo.
-                        </video>
-                    </div>
-                    <p class="text-gray-600 italic mb-4">"O Clube da Fluência me ajudou a finalmente destravar! Em poucas sessões, já me sinto muito mais confiante para falar."</p>
-                    <h4 class="font-bold text-gray-800">Arthur Oliveira</h4>
-                    <span class="text-sm text-gray-500">Aluno do Clube</span>
-                </div>
-                <!-- Membro 2 -->
-                <div class="card p-8 flex flex-col items-center text-center reveal" style="transition-delay: 200ms;">
-                    <!-- Formato do vídeo alterado para retangular vertical -->
-                    <div class="w-32 h-56 rounded-lg mb-4 overflow-hidden bg-gray-300 flex items-center justify-center">
-                        <video class="w-full h-full object-cover" poster="https://placehold.co/90x160/E2E8F0/4A5568?text=Play" controls>
-                            <source src="https://github.com/gerlonmagalhaes/clubedafluencia/raw/refs/heads/main/img/video2.mp4" type="video/mp4">
-                            Seu navegador não suporta a tag de vídeo.
-                        </video>
-                    </div>
-                    <p class="text-gray-600 italic mb-4">"O ambiente é super descontraído e o medo de errar simplesmente some. Recomendo para todo mundo que quer praticar!"</p>
-                    <h4 class="font-bold text-gray-800">Alef Machado</h4>
-                    <span class="text-sm text-gray-500">Aluno do Clube</span>
-                </div>
-                <!-- Membro 3 -->
-                <div class="card p-8 flex flex-col items-center text-center reveal" style="transition-delay: 400ms;">
-                    <!-- Formato do vídeo alterado para retangular vertical -->
-                    <div class="w-32 h-56 rounded-lg mb-4 overflow-hidden bg-gray-300 flex items-center justify-center">
-                        <video class="w-full h-full object-cover" poster="https://placehold.co/90x160/E2E8F0/4A5568?text=Play" controls>
-                            <source src="https://github.com/gerlonmagalhaes/clubedafluencia/raw/refs/heads/main/img/video3.mp4" type="video/mp4">
-                            Seu navegador não suporta a tag de vídeo.
-                        </video>
-                    </div>
-                    <p class="text-gray-600 italic mb-4">"Finalmente encontrei um lugar para praticar conversação sem pressão. A evolução é nítida e os resultados são incríveis!"</p>
-                    <h4 class="font-bold text-gray-800">Narcisse Lokonon</h4>
-                    <span class="text-sm text-gray-500">Aluno do Clube</span>
-                </div>
-            </div>
-        </div>
-    </section>
+    </div>
     
-    <!-- Seção 6: FAQ -->
-    <section id="faq" class="py-20 bg-white">
-        <div class="container mx-auto px-6 max-w-3xl">
-            <h2 class="text-4xl font-bold text-center mb-12 section-title reveal">Perguntas Frequentes</h2>
-            <div class="space-y-4">
-                <!-- Pergunta 1 -->
-                <div class="bg-white rounded-lg shadow-sm reveal">
-                    <button class="faq-toggle w-full flex justify-between items-center text-left p-5 font-semibold text-gray-800">
-                        <span>Qual o nível de inglês necessário para participar?</span>
-                        <svg class="faq-icon w-5 h-5 transition-transform transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
-                    </button>
-                    <div class="faq-content max-h-0 overflow-hidden transition-all duration-500 ease-in-out px-5">
-                        <p class="py-3 text-gray-600">Temos grupos para todos os níveis, do básico ao avançado. O mais importante é a sua vontade de praticar e destravar a fala. Nós te ajudaremos a encontrar o grupo ideal para você.</p>
-                    </div>
-                </div>
-                <!-- Pergunta 2 -->
-                <div class="bg-white rounded-lg shadow-sm reveal">
-                    <button class="faq-toggle w-full flex justify-between items-center text-left p-5 font-semibold text-gray-800">
-                        <span>As aulas são online?</span>
-                        <svg class="faq-icon w-5 h-5 transition-transform transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
-                    </button>
-                    <div class="faq-content max-h-0 overflow-hidden transition-all duration-500 ease-in-out px-5">
-                        <p class="py-3 text-gray-600">Sim, todas as sessões de conversação são 100% online e realizadas em grupo através de plataformas de videoconferência como Zoom ou Google Meet.</p>
-                    </div>
-                </div>
-                <!-- Pergunta 3 -->
-                <div class="bg-white rounded-lg shadow-sm reveal">
-                    <button class="faq-toggle w-full flex justify-between items-center text-left p-5 font-semibold text-gray-800">
-                        <span>Como funcionam os pagamentos?</span>
-                        <svg class="faq-icon w-5 h-5 transition-transform transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
-                    </button>
-                    <div class="faq-content max-h-0 overflow-hidden transition-all duration-500 ease-in-out px-5">
-                        <p class="py-3 text-gray-600">Os pagamentos são semestrais ou anuais e podem ser feitos via cartão de crédito ou Pix. O processo é simples e seguro.</p>
-                    </div>
-                </div>
-                <!-- Pergunta 4 -->
-                <div class="bg-white rounded-lg shadow-sm reveal">
-                    <button class="faq-toggle w-full flex justify-between items-center text-left p-5 font-semibold text-gray-800">
-                        <span>O material está incluso?</span>
-                        <svg class="faq-icon w-5 h-5 transition-transform transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
-                    </button>
-                    <div class="faq-content max-h-0 overflow-hidden transition-all duration-500 ease-in-out px-5">
-                        <p class="py-3 text-gray-600">Sim, todo material de apoio, como vocabulário e expressões dos temas discutidos, é disponibilizado aos membros do clube sem custo adicional.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Seção 7: Contato -->
-    <section id="contato" class="hero-gradient text-white py-20">
-        <div class="container mx-auto px-6 text-center">
-            <h2 class="text-4xl font-bold mb-4 reveal">Pronto para falar inglês com confiança?</h2>
-            <p class="text-xl mb-8 reveal" style="transition-delay: 200ms;">Clique no botão abaixo e fale conosco diretamente no WhatsApp!</p>
-            <a href="https://wa.me/5571920012811?text=Olá!%20Quero%20saber%20mais%20sobre%20o%20Clube%20da%20Fluência." target="_blank" class="btn-cta text-white font-bold py-4 px-10 rounded-full text-xl inline-block mb-10 reveal" style="transition-delay: 400ms;">
-                Falar com um especialista
-            </a>
-            <div class="flex justify-center space-x-6 reveal" style="transition-delay: 500ms;">
-                <!-- Instagram Icon -->
-                <a href="https://www.instagram.com/teacher.gerlon" target="_blank" class="hover:opacity-75" aria-label="Instagram">
-                    <img src="https://github.com/gerlonmagalhaes/clubedafluencia/raw/main/img/1.png" alt="Instagram" class="w-8 h-8">
-                </a>
-                <!-- LinkedIn Icon -->
-                <a href="https://www.linkedin.com/company/my-personal-teacher/?viewAsMember=true" target="_blank" class="hover:opacity-75" aria-label="LinkedIn">
-                    <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.239-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
-                </a>
-                <!-- WhatsApp Icon -->
-                <a href="https://wa.me/5571920012811?text=Olá!%20Quero%20saber%20mais%20sobre%20o%20Clube%20da%20Fluência." target="_blank" class="hover:opacity-75" aria-label="WhatsApp">
-                    <img src="https://github.com/gerlonmagalhaes/clubedafluencia/raw/main/img/2.png" alt="WhatsApp" class="w-8 h-8">
-                </a>
-            </div>
-        </div>
-    </section>
-    
-    <footer class="bg-gray-800 text-white py-6">
-        <div class="container mx-auto px-6 text-center">
-            <p>&copy; 2025 My Personal Teacher. Todos os direitos reservados.</p>
-        </div>
-    </footer>
-    
-    <!-- Botão Voltar ao Topo -->
-    <button id="to-top-button" class="hidden fixed bottom-5 right-5 bg-[#4f2b7d] text-white p-3 rounded-full shadow-lg hover:bg-[#6a3a99] transition-opacity duration-300">
-      <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"></path></svg>
-    </button>
-
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            // Lógica do Menu Mobile
-            const mobileMenuButton = document.getElementById('mobile-menu-button');
-            const mobileMenu = document.getElementById('mobile-menu');
-            mobileMenuButton.addEventListener('click', () => {
-                mobileMenu.classList.toggle('hidden');
+        const { jsPDF } = window.jspdf;
+
+        // --- DEFINIÇÃO ÚNICA DAS CLÁUSULAS (Para Modal e PDF) ---
+        const contractClauses = [
+            { title: 'CLÁUSULA 1 - OBJETO', text: '1.1. O presente contrato tem como objeto a prestação de serviços para o Clube de Conversação Online, dirigido no idioma inglês, na modalidade de grupo de até 8 participantes, voltado à prática e desenvolvimento da fluência e conversação do(a) CONTRATANTE.\n1.2. O Clube da Fluência realizará encontros síncronos 2 (duas) vezes por semana, com foco primordial na conversação, abrangendo temas variados, debates, simulações de situações cotidianas e apresentações. Os dias da semana para a realização desses encontros serão definidos previamente para cada semestre.\n1.3. O serviço objeto deste contrato é de natureza híbrida, sendo composto por:\na) Licença de Acesso e Uso de Material Didático Digital: Concessão de uma licença não exclusiva e intransferível para que o CONTRATANTE acesse e utilize a integralidade do conteúdo digital do curso, incluindo, mas não se limitando à, videoaulas gravadas em plataforma, materiais em PDF e Powerpoint, atividades no Google Sala de Aula e outros recursos digitais. O acesso a este componente é liberado integralmente ao CONTRATANTE na data de início da vigência do contrato.\nb) Serviços de Instrução e Acompanhamento Contínuo: Prestação de serviços de ensino através de encontros de conversação online (aulas síncronas), suporte para dúvidas e acompanhamento pedagógico, que ocorrem de forma contínua e programada ao longo do período contratual.' },
+            { title: 'CLÁUSULA 2 - DURAÇÃO DO PROGRAMA', text: '2.1. O CONTRATANTE opta pelo programa de 6 (seis) meses ou 1 (um) ano de duração.\n2.2. Os encontros terão duração de 60 (sessenta) minutos cada.\n2.3. Serão respeitados os feriados municipais (cidade de Salvador), estaduais (Bahia) e nacionais (Brasil), não havendo encontros nessas datas.\n2.4. Haverá recessos no programa, podendo chegar a até 8 (oito) semanas de recesso por ano, conforme cronograma do curso.' },
+            { title: 'CLÁUSULA 3 - RESPONSABILIDADES DO/A CONTRATANTE', text: '3.1. O sucesso do programa depende diretamente do comprometimento do/a CONTRATANTE. Para alcançar os objetivos, este deverá:\na) Participar dos encontros síncronos agendados.\nb) Assistir às aulas gravadas disponibilizadas.\nc) Seguir o plano de estudos personalizado elaborado pelo programa.\n3.2. A ausência de comprometimento nas ações acima citadas pode comprometer os resultados esperados, não sendo responsabilidade da CONTRATADA.' },
+            { title: 'CLÁUSULA 4 - RESPONSABILIDADES DA CONTRATADA', text: '4.1. A CONTRATADA se compromete a fornecer ao(à) CONTRATANTE os serviços e recursos, conforme o plano de Clube de Conversação contratado e durante o período de vigência escolhido (6 ou 12 meses). Após esse período, o acesso será removido, caso não haja renovação do contrato. O CONTRATANTE poderá renovar o contrato a qualquer tempo, mediante novo acordo.\n4.2. A CONTRATADA também se responsabiliza por fornecer os seguintes recursos e serviços:\na) Acesso a módulos de aulas de gramática em vídeo na plataforma Nutror (ou plataforma de vídeo equivalente) e atividades no Google Sala de Aula. O número exato de aulas e exercícios dependerá do conteúdo disponibilizado.\nb) Os encontros online ocorrerão conforme a quantidade e duração especificadas na Cláusula 2.2.\nc) Acompanhamento mensal do desempenho do(a) CONTRATANTE.\n4.3. A CONTRATADA garante que será designado um mentor qualificado para acompanhar o(a) CONTRATANTE durante a vigência deste contrato, podendo ser profissionais diferentes, mas assegurando o mesmo método e padrão de acompanhamento da CONTRATADA.' },
+            { title: 'CLÁUSULA 5 - POLÍTICA DE PAGAMENTO E REEMBOLSO', text: '5.1. O pagamento pelos serviços do Clube de Conversação deve ser realizado no ato da contratação, seguindo as condições acordadas.\n5.2. Em caso de pagamento parcelado com cartão de crédito, poderá haver acréscimo no valor total do contrato devido às taxas cobradas pela operadora do cartão que serão arcadas pelo CONTRATANTE.\n5.3. Em caso de desistência por parte do CONTRATANTE após o início do curso após período de sete dias, será cobrado o valor proporcional referente às aulas não ministradas, calculado com base na carga horária contratada, nas licenças de acesso de uso do material e no valor total pago.\n5.4. Sobre o saldo remanescente referente valor das aulas não realizadas, poderá ser aplicada multa contratual de até 20% (vinte por cento), destinada a cobrir custos administrativos.\n5.5. O valor restante, após a dedução proporcional e da multa, será devolvido ao CONTRATANTE ou, a seu critério, convertido em crédito para utilização em outros serviços oferecidos pela CONTRATADA, válido por até 12 (doze) meses a partir da data da desistência.\n5.6. Fica assegurado ao CONTRATANTE o direito de arrependimento no prazo de 7 (sete) dias corridos a contar da assinatura do contrato ou do primeiro pagamento, com devolução integral dos valores pagos, conforme disposto no artigo 49 do Código de Defesa do Consumidor.' },
+            { title: 'CLÁUSULA 6 - CONFIDENCIALIDADE E USO DE INFORMAÇÕES', text: '6.1. Todas as informações pessoais e profissionais compartilhadas pelo/a CONTRATANTE com a CONTRATADA serão tratadas com sigilo. A CONTRATADA se compromete a não divulgar dados confidenciais a terceiros.\n6.2. O/A CONTRATANTE concorda que informações não confidenciais, como depoimentos, dados gerais sobre progresso e resultados, poderão ser utilizadas pela CONTRATADA para fins educativos e de propaganda. Isso inclui o uso como estudos de caso e materiais para a comunidade do Clube de Conversação.' },
+            { title: 'CLÁUSULA 7 - RESCISÃO DO CONTRATO', text: '7.1. O presente contrato será automaticamente rescindido ao término do prazo de vigência contratado (6 ou 12 meses), e o acesso a todo o conteúdo e serviços será encerrado neste momento.\n7.2. A CONTRATADA poderá rescindir o contrato caso o/a CONTRATANTE não siga as condições estabelecidas neste CONTRATO.' },
+            { title: 'CLÁUSULA 8 - DISPOSIÇÕES FINAIS', text: '8.1. Ao assinar este contrato, o/a CONTRATANTE declara que leu e concorda com os termos apresentados.\n8.2. A vigência deste contrato é a definida na Cláusula 2.1.\n8.3. O contrato é dado como válido quando enviado para a Contratada pelos seus canais de email ou whatsapp, e a Contratada dando ciência de está tudo correto, tal como o pagamento estando completo.' }
+        ];
+
+        function getContractNumber() {
+            let contractNumber = localStorage.getItem('contractCounter');
+            if (!contractNumber || isNaN(parseInt(contractNumber))) {
+                contractNumber = 1; 
+            }
+            return parseInt(contractNumber);
+        }
+
+        function incrementContractNumber() {
+            let currentNumber = getContractNumber();
+            currentNumber++;
+            localStorage.setItem('contractCounter', currentNumber.toString());
+        }
+
+        const viewContractLink = document.getElementById('view-contract-link');
+        const contractModal = document.getElementById('contract-modal');
+        const closeModalButton = document.getElementById('close-modal');
+        const closeModalFooterButton = document.getElementById('close-modal-footer');
+        const contractContentModal = document.getElementById('contract-content-modal');
+        const cpfInput = document.getElementById('cpf');
+        
+        // Função para formatar o CPF
+        cpfInput.addEventListener('input', (e) => {
+            let value = e.target.value.replace(/\D/g, '');
+            value = value.replace(/(\d{3})(\d)/, '$1.$2');
+            value = value.replace(/(\d{3})(\d)/, '$1.$2');
+            value = value.replace(/(\d{3})(\d{1,2})$/, '$1-$2');
+            e.target.value = value.slice(0, 14);
+        });
+
+        // --- FUNÇÃO PARA GERAR O CONTEÚDO HTML DO CONTRATO PARA O MODAL ---
+        function getContractHtml() {
+            let htmlContent = '';
+            contractClauses.forEach(clause => {
+                htmlContent += `<h4 class="font-bold text-base mt-4 mb-1">${clause.title}</h4>`;
+                htmlContent += `<p class="text-sm text-gray-700">${clause.text}</p>`;
             });
+
+            return htmlContent;
+        }
+        
+        // --- FUNÇÃO CORRIGIDA PARA O MODAL ---
+        function getContractTextForModal() {
+            return getContractHtml(); 
+        }
+
+        viewContractLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            contractContentModal.innerHTML = getContractTextForModal();
+            contractModal.classList.remove('hidden');
+            contractModal.classList.add('flex');
+        });
+
+        const closeModal = () => {
+            contractModal.classList.add('hidden');
+            contractModal.classList.remove('flex');
+        };
+        closeModalButton.addEventListener('click', closeModal);
+        closeModalFooterButton.addEventListener('click', closeModal);
+        
+        const canvas = document.getElementById('signature-pad');
+        const clearSignatureButton = document.getElementById('clear-signature');
+        const signaturePad = new SignaturePad(canvas, { backgroundColor: 'rgb(255, 255, 255)' });
+        
+        function resizeCanvas() {
+            const ratio =  Math.max(window.devicePixelRatio || 1, 1);
+            canvas.width = canvas.offsetWidth * ratio;
+            canvas.height = canvas.offsetHeight * ratio;
+            canvas.getContext("2d").scale(ratio, ratio);
+            signaturePad.fromData(signaturePad.toData());
+        }
+        window.addEventListener("resize", resizeCanvas);
+        resizeCanvas();
+
+        clearSignatureButton.addEventListener('click', () => { signaturePad.clear(); });
+
+        const form = document.getElementById('contract-form');
+        const statusMessage = document.getElementById('status-message');
+        const submitButton = document.getElementById('submit-button');
+        const buttonText = document.getElementById('button-text');
+        const loader = document.getElementById('loader');
+
+        form.addEventListener('submit', async function(event) {
+            event.preventDefault();
             
-            // Lógica do FAQ (Accordion)
-            const faqToggles = document.querySelectorAll('.faq-toggle');
-            faqToggles.forEach(toggle => {
-                toggle.addEventListener('click', () => {
-                    const content = toggle.nextElementSibling;
-                    const icon = toggle.querySelector('.faq-icon');
+            if (signaturePad.isEmpty()) {
+                statusMessage.innerHTML = '<p class="text-red-600 font-semibold">Por favor, forneça sua assinatura no campo indicado.</p>';
+                return;
+            }
 
-                    if (content.style.maxHeight) {
-                        content.style.maxHeight = null;
-                        icon.style.transform = 'rotate(0deg)';
-                    } else {
-                        content.style.maxHeight = content.scrollHeight + 'px';
-                        icon.style.transform = 'rotate(180deg)';
-                    }
-                });
-            });
+            buttonText.textContent = 'Gerando PDF...';
+            loader.classList.remove('hidden');
+            submitButton.disabled = true;
+            statusMessage.innerHTML = '';
 
-            // Lógica da Animação ao Rolar
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('visible');
-                    }
-                });
-            }, { threshold: 0.1 });
+            try {
+                const { jsPDF } = window.jspdf;
+                const pdf = new jsPDF('p', 'mm', 'a4');
 
-            document.querySelectorAll('.reveal').forEach(el => {
-                observer.observe(el);
-            });
-            
-            // Lógica do Botão "Voltar ao Topo"
-            const toTopButton = document.getElementById('to-top-button');
-            window.addEventListener('scroll', () => {
-                if (window.scrollY > 300) {
-                    toTopButton.classList.remove('hidden');
-                } else {
-                    toTopButton.classList.add('hidden');
+                const contractNumber = getContractNumber();
+                const contractNumberFormatted = String(contractNumber).padStart(2, '0');
+
+                const fullName = document.getElementById('fullName').value;
+                const cpf = document.getElementById('cpf').value;
+                // CAPTURA DOS NOVOS CAMPOS
+                const planDuration = document.getElementById('planDuration').value;
+                const contractValue = document.getElementById('contractValue').value;
+                const birthdateRaw = document.getElementById('birthdate').value;
+                const birthdate = birthdateRaw.split('-').reverse().join('/');
+
+                if (!fullName.trim().includes(' ')) {
+                    alert('Por favor, digite seu nome completo (Nome e Sobrenome).');
+                    buttonText.textContent = 'Gerar e Baixar Contrato PDF';
+                    loader.classList.add('hidden');
+                    submitButton.disabled = false;
+                    return;
                 }
-            });
 
-            toTopButton.addEventListener('click', () => {
-                window.scrollTo({
-                    top: 0,
-                    behavior: 'smooth'
-                });
-            });
+                const signatureImage = signaturePad.toDataURL('image/png');
+                const currentDate = new Date().toLocaleDateString('pt-BR', { day: 'numeric', month: 'long', year: 'numeric' });
 
-            // Lógica do Carrossel do Teacher
-            const carouselItems = document.querySelectorAll('#teacher-carousel .carousel-item');
-            const carouselIndicators = document.querySelectorAll('#teacher-carousel .carousel-indicator');
-            const prevButton = document.getElementById('prev-slide');
-            const nextButton = document.getElementById('next-slide');
-            
-            let currentSlide = 0;
-            const totalSlides = carouselItems.length;
-            let slideInterval;
+                const pageHeight = pdf.internal.pageSize.height || pdf.internal.pageSize.getHeight();
+                const pageWidth = pdf.internal.pageSize.width || pdf.internal.pageSize.getWidth();
+                const margin = 20;
+                let y = margin;
 
-            const showSlide = (n) => {
-                carouselItems.forEach((item, index) => {
-                    item.classList.add('hidden');
-                    if (index === n) {
-                        item.classList.remove('hidden');
+                // --- FUNÇÃO PARA ADICIONAR TEXTO JUSTIFICADO ---
+                const addText = (text, options = {}) => {
+                    const { size = 10, style = 'normal', align = 'justify', spaceAfter = 5 } = options;
+                    
+                    pdf.setFontSize(size);
+                    pdf.setFont('helvetica', style);
+
+                    const maxLineWidth = pageWidth - (margin * 2);
+
+                    const textDimensions = pdf.getTextDimensions(text, {
+                        fontSize: size,
+                        maxWidth: maxLineWidth
+                    });
+
+                    if (y + textDimensions.h > pageHeight - margin) {
+                        pdf.addPage();
+                        y = margin;
                     }
-                });
-
-                carouselIndicators.forEach((indicator, index) => {
-                    indicator.setAttribute('aria-current', 'false');
-                    indicator.classList.remove('bg-white');
-                    indicator.classList.add('bg-white/50');
-                    if (index === n) {
-                        indicator.setAttribute('aria-current', 'true');
-                        indicator.classList.add('bg-white');
-                        indicator.classList.remove('bg-white/50');
+                    
+                    let xPos = margin;
+                    if (align === 'center') {
+                        xPos = pageWidth / 2;
                     }
+
+                    pdf.text(text, xPos, y, {
+                        maxWidth: maxLineWidth,
+                        align: align
+                    });
+
+                    y += textDimensions.h + spaceAfter;
+                };
+
+                // --- MONTAGEM DO PDF ---
+                addText(`CONTRATO CLUBE DA FLUÊNCIA MY PERSONAL TEACHER ${contractNumberFormatted}/2025`, { size: 14, style: 'bold', align: 'center', spaceAfter: 10 });
+                
+                addText('CONTRATADA: MY PERSONAL TEACHER, pessoa jurídica de direito privado, inscrita no CNPJ/MF sob o n° 31.890.545/0001-44.', { style: 'bold', align: 'left', spaceAfter: 10 });
+                
+                addText(`CONTRATANTE: ${fullName}`, { style: 'bold', align: 'left' });
+                addText(`CPF: ${cpf}`, { style: 'bold', align: 'left' });
+                addText(`DATA DE NASCIMENTO: ${birthdate}`, { style: 'bold', align: 'left' });
+                // INSERÇÃO DO PLANO E VALOR
+                addText(`PLANO: ${planDuration}`, { style: 'bold', align: 'left' });
+                addText(`VALOR DO CONTRATO: ${contractValue}`, { style: 'bold', align: 'left', spaceAfter: 10 });
+                
+                // 3. CLÁUSULAS
+                contractClauses.forEach(clause => {
+                    addText(clause.title, { style: 'bold', size: 11, spaceAfter: 3, align: 'left' });
+                    addText(clause.text, { size: 10, spaceAfter: 8, align: 'justify' });
                 });
-            };
 
-            const nextSlide = () => {
-                currentSlide = (currentSlide + 1) % totalSlides;
-                showSlide(currentSlide);
-            };
+                // 4. ASSINATURAS
+                addText(`Salvador/BA, ${currentDate}.`, { spaceAfter: 20, align: 'left' });
+                
+                const signatureWidthMm = 60;
+                const signatureHeightMm = 30;
+                if (y + signatureHeightMm > pageHeight - margin) {
+                    pdf.addPage();
+                    y = margin;
+                }
+                pdf.addImage(signatureImage, 'PNG', margin, y, signatureWidthMm, signatureHeightMm);
+                y += signatureHeightMm + 2;
 
-            const prevSlide = () => {
-                currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
-                showSlide(currentSlide);
-            };
+                addText('_________________________', { size: 10, spaceAfter: 2, align: 'left' });
+                addText(fullName, { size: 10, align: 'left' });
 
-            const startCarousel = () => {
-                slideInterval = setInterval(nextSlide, 5000); // Muda a cada 5 segundos
-            };
+                pdf.save(`Contrato-${fullName}.pdf`);
+                incrementContractNumber();
 
-            const stopCarousel = () => {
-                clearInterval(slideInterval);
-            };
+                statusMessage.innerHTML = `
+                    <div class="bg-green-100 border-l-4 border-green-500 text-green-700 p-4 rounded-lg" role="alert">
+                        <p class="font-bold">PDF Baixado com Sucesso!</p>
+                        <p class="mt-2">Envie o arquivo para:</p>
+                        <div class="mt-4 flex flex-col sm:flex-row justify-center items-center gap-4">
+                            <a href="mailto:cursomyteacher@gmail.com" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700">Enviar por E-mail</a>
+                            <a href="https://wa.me/5571920012811" target="_blank" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-green-600 hover:bg-green-700">Enviar por WhatsApp</a>
+                        </div>
+                    </div>
+                `;
+                form.reset();
+                signaturePad.clear();
 
-            // Event listeners
-            nextButton.addEventListener('click', () => {
-                stopCarousel();
-                nextSlide();
-                startCarousel();
-            });
-
-            prevButton.addEventListener('click', () => {
-                stopCarousel();
-                prevSlide();
-                startCarousel();
-            });
-
-            carouselIndicators.forEach((indicator, index) => {
-                indicator.addEventListener('click', () => {
-                    stopCarousel();
-                    currentSlide = index;
-                    showSlide(currentSlide);
-                    startCarousel();
-                });
-            });
-            
-            // Inicia o carrossel
-            showSlide(currentSlide);
-            startCarousel();
+            } catch (error) {
+                statusMessage.innerHTML = `<p class="text-red-600 font-semibold">Ocorreu um erro ao gerar o PDF: ${error.message}</p>`;
+            } finally {
+                buttonText.textContent = 'Gerar e Baixar Contrato PDF';
+                loader.classList.add('hidden');
+                submitButton.disabled = false;
+            }
         });
     </script>
-
 </body>
 </html>
-
